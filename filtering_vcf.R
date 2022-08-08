@@ -5,7 +5,7 @@ library(tidyverse) # V1.3.1
 # 2) Filters VCFs
 # Filtering steps
 # Remove CNVs which haven't passed
-# Remove CNVs not called by at least two callers from Parliment
+# Remove CNVs not called by at least two callers from Parliament2
 # Remove common variants using DGV gold  
 ## example VCF ##
 # Starts at 31,782
@@ -48,7 +48,7 @@ tidy_dgv_gold_df <- dgv_gold_df %>%
          Number_of_unique_samples_tested = as.integer(Number_of_unique_samples_tested),
          frequency_round = round(((as.integer(num_samples)/as.integer(Number_of_unique_samples_tested))*100), digits = 3)) %>% 
   select(chrom, start, end, num_variants, num_studies, num_samples, Frequency, frequency_round, Number_of_unique_samples_tested, ID) %>%
-  filter(frequency_round > 5.0) %>% # Aligns with ACMG guidance (2015) that variants a > 5% in control population are very likely benign 
+  filter(frequency_round > 5.0) %>% # Aligns with ACMG guidance (2015) that variants a > 5% in the population are very likely benign 
   # take dataframe from 113,556 to 31,347
   select(chrom, start, end) %>% # Need to remove ID column if going to merg this after
   distinct()  # removes duplicated rows, generated from having thick and thin start/ends for each variant.
@@ -69,7 +69,6 @@ write.table(tidy_dgv_gold_df , "DGV_GS_hg38_tidy.txt", sep ='\t', col.names = FA
 
 setwd("/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/vcfs/")
 sample_list <- readLines("sample_list.txt")
-#sample_ID <- "300033_180909_I302_CL100084594_L1_HUMykkRAAAB-525_1_rmdup"
 
 for (sample_ID in sample_list) {
   

@@ -40,7 +40,7 @@
 
 list_of_samples=/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/vcfs/sample_list.txt
 path_to_filtered_vcfs=/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/filtered_vcfs
-path_to_dgv=/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/controls
+path_to_dgv=/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/dgv
 dgv_tidy_file=DGV_GS_hg38_tidy_sorted_100_bp_regions_merged.txt
 path_to_genes_bed=/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/reference
 
@@ -54,13 +54,13 @@ do
         # -r Require that the fraction of overlap be reciprocal for A and B. 
         # In other words, if -f is 0.50 and -r is used, this requires that B overlap at least 50% of A and that A also overlaps at least 50% of B.
         # - wa keeps original region for -a and -wb the same for -b
-        bedtools intersect -a $path_to_filtered_vcfs/$sample_ID.filtered_vcf.txt -b $path_to_dgv/$dgv_tidy_file -f 0.5 -r -wa -wb >> $path_to_filtered_vcfs/control_overlap_$sample_ID.txt
+        bedtools intersect -a $path_to_filtered_vcfs/$sample_ID.filtered_vcf.txt -b $path_to_dgv/$dgv_tidy_file -f 0.5 -r -wa -wb >> $path_to_filtered_vcfs/dgv_overlap_$sample_ID.txt
         # Find regions which are not in normal controls 
         # -v finds all regions in -a which don't appear in -b and a 50% overlap, for both A & B -r
-        bedtools intersect -a $path_to_filtered_vcfs/$sample_ID.filtered_vcf.txt -b $path_to_dgv/$dgv_tidy_file -v -f 0.5 -r >> $path_to_filtered_vcfs/no_control_overlap_$sample_ID.txt
+        bedtools intersect -a $path_to_filtered_vcfs/$sample_ID.filtered_vcf.txt -b $path_to_dgv/$dgv_tidy_file -v -f 0.5 -r >> $path_to_filtered_vcfs/no_dgv_overlap_$sample_ID.txt
         # Find filtered regions  which are in genes of interest
         # As there's multipule transcripts in the same bed file, there's lots of duplication in some of the file 
-        bedtools intersect -a $path_to_genes_bed/genes_of_interest_sorted_merged.bed -b $path_to_filtered_vcfs/no_control_overlap_$sample_ID.txt  \
+        bedtools intersect -a $path_to_genes_bed/genes_of_interest_sorted_merged.bed -b $path_to_filtered_vcfs/no_control_dgv_$sample_ID.txt  \
                               -wa -wb -f 0.1  >> $path_to_filtered_vcfs/control_filtered_genes_of_interest_little_f_10_$sample_ID.txt
       
 done < $list_of_samples
