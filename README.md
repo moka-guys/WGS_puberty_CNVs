@@ -27,6 +27,13 @@ Filter WGS CNV Puberty delay VCFs in the following steps
   1) Find results from filtered VCF which overlap with regions in the DGV Gold file. 50% overlap of DGV gold & variant from VCF must be met 
   2) Find results from filtered VCF which do not overlap with regions in the DGV Gold file. < 50% overlap of DGV gold & variant from VCF must be met
   3) Filter regions based on genes of interest bed file (genes_of_interest_sorted_merged.bed)
+  
+  
+## Run merge_outputs.py
+
+1) Pull in all the different data into dataframes 
+2) Set them to output on a separate tab, of a single .xlxs sheet per patient 
+3) Save!
 
 
 
