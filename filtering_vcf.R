@@ -45,7 +45,7 @@ tidy_vcf <- vcf %>%
   
 filtered_vcf <- tidy_vcf %>% 
   filter(FILTER == "PASS") %>% # Remove CNVs which didn't pass filter 
-  filter(SUPP >= 2) # .+ 2 callers agree on the SV at this location 
+  filter(str_detect(CALLERS, ",")) # , denotes that at least two CNV callers found this# .+ 2 callers agree on the SV at this location 
 
 
 setwd("/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/vcfs/")

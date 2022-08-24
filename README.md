@@ -76,42 +76,63 @@ Output: bed_file_with_gene.bed
 
 ## Understanding outputs. 
 ### Common headers across outputs
+<br />
 QUAL: 
 - LowQual,Description="Variant calls with this profile of supporting calls typically have a low overall precision">
 - Unknown,Description="Insufficient quality evidence exists for calls of this type and support">
 - Unconfirmed,Description="It was not possible to confirm this event by genotyping">
+</br>
 CIEND:
-- Description="PE confidence interval around END""
+- Description="PE confidence interval around END"
+<br />
 CIPOS:
 - Description="PE confidence interval around POS"
+<br />
 CHR2:
 -Description="Chromosome for END coordinate in case of a translocation"
+<br />
 END:
 - Description="End position of the structural variant"
+<br />
 AVGLEN:
 - Description="Length of the SV"
+<br />
 SVMETHOD:
 - Description="Method for generating this merged VCF file."
+<br />
 SVTYPE:
 - Description="Type of the SV."
+<br />
 SUPP_VEC:
 - Description="Vector of supporting samples."
+<br />
 SUPP:
 -Description="Number of samples supporting the variant"
+<br />
 STRANDS:
 - Description="Indicating the direction of the reads with respect to the type and breakpoint."
+<br />
 CALLERS:
 - Description="Callers that support an ALT call at this position. To be included, the caller must have been confirmed by separate genotyping with SVTyper"
+<br />
 GT:
 - Description="Genotype"
 
 ### Specific files
+
+
+#### result_counts.txt
+- Rows per different file type (denoting the filtering steps)
+
+
 #### Sample_ID_output.xlsx is a per sample excel sheet made up of four tabs
 Unfiltered VCF: This show all the variants in the VCF before filtering 
 Filtered VCF: Variants remaining after filtering. QUAL must be PASS, >= two callers supporting SV. 
 No DGV overlap regions: this is the filtered VCF from the above step, but variants remaining do not have >=50% overlap with known DGV Gold standard SV.
 BED file overlap regions: Filtered VCF, but only showing regions which overlap with the transcript_annotated_genes_of_interest.bed file 
 
-#### Genes_of_interest_results.xlsx is a 
+#### Genes_of_interest_results.xlsx 
+- Count of SV per gene: counts the number of SVs detected per SV type, per gene 
+- Gene tabs: Show SV genomic coordinate which has occurred in each gene, and other sample information 
 
-## These scripts were developed by Viapath Genome Informatic
+## These scripts were developed by Viapath Genome Informatics

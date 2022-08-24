@@ -26,13 +26,13 @@ write.table(count_cnv_per_gene ,"all_samples_intersected_with_genes_of_interest_
 
 # Make a list of all the unique genes to loop through
 unique_genes <- unique(intersected_genes_of_interest$V5)
-
+gene <- "ACTL6B"
 # Create and save a txt file per unique gene
 for (gene in unique_genes) {
   
   unqiue <- intersected_genes_of_interest %>% 
     dplyr::select(V8, V9, V10, V5, V20, V16, # Genomic location (SV), HGNC Symbol, SV type, no of callers supporting, genotype
-                  V17, V23, V24, V25, V26, V7) %>% # SV end chr, PE CI around end and start, starnd, SV callers, Sample ID
+                  V17, V22, V23, V24, V25, V26, V7) %>% # SV end chr, PE CI around end and start, starnd, SV callers, Sample ID
     distinct() %>%  
     filter(V5 == gene) 
   
