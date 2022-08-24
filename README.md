@@ -2,17 +2,30 @@
 
 ## What do these scripts do? 
 
-Filter WGS CNV Puberty delay VCFs in the following steps 
+Filter WGS CNV Puberty delay VCFs
+Annotate CNVs which occurred in regions of interest & regions which aren't
 
-## Run filterign_vcf.R
+## Order for running 
+
+
+## Run tidy_reference_data.R
+
+#### Annotate regions of interest with gene symbols 
+1) Take genes_of_interest.bed (multiple transcripts per gene of interest)
+2) Run biomaRt to add HGNC ID and HGNC Symbol for each transcript
+Output: bed_file_with_gene.bed
+
 
 #### Tidy DGV Gold standard variants 
   1) DGV gold standard variants (taken from http://dgv.tcag.ca/dgv/docs/DGV.GS.hg38.gff3, release date 2016-05-15)
   2) Takes the thick regions for the coordinates for each variant (which has the highest confidence)
   3) Removes variants not seen at > 5.0% of the population to align with ACMG guidance for frequency of likely benign variants in the population 
+
+## Run filterign_vcf.R
+
 #### Filter VCFs
  1) Remove CNVs which didn't meet Parliament2 filtering steps 
- 2) Remove CNVs which were only called by a single caller. CNVs called by ≥ callers are kept
+ 2) Remove CNVs which were only called by a single caller. CNVs called by ≥ two callers are kept
 
 
 ## Run bedtools_WGS_Puberty_CNV.sh
