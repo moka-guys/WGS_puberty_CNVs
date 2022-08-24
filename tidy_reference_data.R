@@ -47,7 +47,7 @@ filtered_annotated_bed_file <- annotate_transcript_bed_file %>%
 
 # Save!
 
-write.table(filtered_genes_2 , "bed_file_with_gene.bed", sep ='\t',
+write.table(filtered_annotated_bed_file , "bed_file_with_gene.bed", sep ='\t',
             col.names = FALSE, row.names = FALSE, quote = FALSE) # Save df
 
 # ===================== #
@@ -57,7 +57,7 @@ write.table(filtered_genes_2 , "bed_file_with_gene.bed", sep ='\t',
 # DGV gold standard variants is a curated set of variants from a number of studies from DGV
 # Taken from http://dgv.tcag.ca/dgv/docs/DGV.GS.hg38.gff3
 # Release date 2016-05-15
-setwd("/home/erin/Documents/Work/SNP_array_liftover/dgv_gold_track_38") 
+setwd("/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/reference")
 dgv_gold_df <- read.delim("DGV.GS.hg38.gff3", sep = '\t' , header = FALSE) 
 
 col_names_two_less_dgv <- c( "Name", "variant_type",  "outer_start", "inner_start", "inner_end", "outer_end", "inner_rank", "num_variants",
@@ -73,7 +73,7 @@ tidy_dgv_gold_df <- dgv_gold_df %>%
   separate(V9, col_names_dgv, sep = ";") %>% # Separate the final column into multiple columns
   pivot_longer(all_of(col_names_two_less_dgv), names_to = "name", values_to = "value") %>% # Flip df to easily manipulate data
   mutate(value_alone = str_remove(value, ".*=")) %>% # Remove string up to "="
-  select(-c(value)) %>% # Drop unnecessary column 
+  dplyr::select(-c(value)) %>% # Drop unnecessary column 
   pivot_wider(names_from = name, values_from = value_alone) %>% 
   mutate(variant_sub_type = str_remove(variant_sub_type, ".*=")) %>% 
   rename(chrom = V1, # rename 
@@ -84,17 +84,15 @@ tidy_dgv_gold_df <- dgv_gold_df %>%
          num_samples = as.integer(num_samples),
          Number_of_unique_samples_tested = as.integer(Number_of_unique_samples_tested),
          frequency_round = round(((as.integer(num_samples)/as.integer(Number_of_unique_samples_tested))*100), digits = 3)) %>% 
-  select(chrom, start, end, num_variants, num_studies, num_samples, Frequency, frequency_round, Number_of_unique_samples_tested, ID) %>%
+  dplyr::select(chrom, start, end, num_variants, num_studies, num_samples, Frequency, frequency_round, Number_of_unique_samples_tested, ID) %>%
   filter(frequency_round > 5.0) %>% # Aligns with ACMG guidance (2015) that variants a > 5% in the population are very likely benign 
   # take dataframe from 113,556 to 31,347
-  select(chrom, start, end) %>% # Need to remove ID column if going to merg this after
+  dplyr::select(chrom, start, end) %>% # Need to remove ID column if going to merg this after
   distinct()  # removes duplicated rows, generated from having thick and thin start/ends for each variant.
 # from 31,347 to 10,449
 
-rm(dgv_gold_df)
-
 # Save 
-setwd("/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/dgv/")
+setwd("/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/reference/")
 write.table(tidy_dgv_gold_df , "DGV_GS_hg38_tidy.txt", sep ='\t', col.names = FALSE, row.names = FALSE, quote = FALSE) # Save df
 
 # ===================== #
