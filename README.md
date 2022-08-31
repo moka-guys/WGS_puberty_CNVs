@@ -1,17 +1,17 @@
-# Scripts for filtering WGS Puberty CNV data
+# Scripts for filtering WGS Puberty SV data
 
 ## What do these scripts do? 
 
-### Filter WGS CNV Puberty delay VCFs 
+### Filter WGS SV Puberty delay VCFs 
 These scripts reduce the number of calls made by the Parliment SV caller by:
 - Removing SV calls which did not pass QC 
 - Removing SV calls which did not have >=2 callers agree on the SV
 - Removing regions which appear in DGV Gold Standard variants 
 
-### Annotate CNVs which occurred in regions of interest
+### Annotate SVs which occurred in regions of interest
 - Filtered VCFs are used to determine how often SVs are found in regions of interest (transcript_annotated_genes_of_interest.bed)
 
-### Try to discover additional significant CNVs in genes which aren't in the genes of interest (gene discovery)
+### Try to discover additional significant SVs in genes which aren't in the genes of interest (gene discovery)
 - Take filtered VCFs & remove all regions which occur in regions of interest 
 - Annotate the genes these SVs appear in 
 - Create an out which shows all the gene annotated regions per patient SV occurred in 
@@ -85,7 +85,7 @@ This script performs three separate tasks
 1) Prepares data to be merged, splitting on SV type (deletion or inversion) and genotype 
 
 ## Run gene_discovery.sh: Step two
-There's a lot of repeated CNV regions in the output file, where one CNV is repeated many times with a unique ID
+There's a lot of repeated SV regions in the output file, where one SV is repeated many times with a unique ID
 <br />
 1) Sort the files saved in the previous step 
 2) Merge regions which overlap by at least one base pair
