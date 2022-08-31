@@ -178,8 +178,9 @@ BED file overlap regions: Filtered VCF, but only showing regions which overlap w
 #### sample_ID.gene.symbols.concat.txt 
 - Genomic regions, with overlapping SVs (with the same genotype) merged and the gene/s on a per patient basis 
 
-#### gene_discovery_dgv_gold.txt
+#### gene_discovery_output.xlsx
 - genes, count (in the sample population), SV type and IDs of the samples with this variant
+- Each tab represent SVs which occured in different numbers of samples in the study
 
 
 
