@@ -164,8 +164,11 @@ GT:
 
 #### Sample_ID_output.xlsx is a per sample excel sheet made up of four tabs
 Unfiltered VCF: This show all the variants in the VCF before filtering 
+<br />
 Filtered VCF: Variants remaining after filtering. QUAL must be PASS, >= two callers supporting SV. 
+<br />
 No DGV overlap regions: this is the filtered VCF from the above step, but variants remaining do not have >=50% overlap with known DGV Gold standard SV.
+<br />
 BED file overlap regions: Filtered VCF, but only showing regions which overlap with the transcript_annotated_genes_of_interest.bed file 
 
 #### Genes_of_interest_results.xlsx 
