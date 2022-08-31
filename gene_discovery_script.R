@@ -184,18 +184,40 @@ for (sample_ID in sample_list) {
 df_bound_genes <- dplyr::bind_rows(all_sample_genes) %>% 
   group_by(V5, V6 ) %>% # include V5 here to split count by Dels or Inversions
   distinct() %>% 
-  mutate(count = n()) %>% 
+  mutate(ascount = n()) %>% 
   group_by(V5, count, V6) %>% 
   summarise(
     note = paste0(patient, collapse = ",")
-  ) %>% 
-  filter(count >= 20) %>% 
-  dplyr::select(V6, count, V5, note)
+  )
 
 names(df_bound_genes) <- c("GENE/S", "COUNT", "SV_TYPE", "IDs")
+
+# Split by number to save on tabs in another script
+
+first_df <- df_bound_genes %>% 
+  filter(between(COUNT, 30,40)) %>% 
+  dplyr::select("GENE/S", "COUNT", "SV_TYPE", "IDs")
+
+second_df <- df_bound_genes %>% 
+  filter(between(COUNT, 20, 39)) %>% 
+  dplyr::select("GENE/S", "COUNT", "SV_TYPE", "IDs")
+
+third_df <- df_bound_genes %>% 
+  filter(between(COUNT, 10, 19)) %>% 
+  dplyr::select("GENE/S", "COUNT", "SV_TYPE", "IDs")
+
+fourth_df <- df_bound_genes %>% 
+  filter(between(COUNT, 4, 9)) %>% 
+  dplyr::select("GENE/S", "COUNT", "SV_TYPE", "IDs")
 
 
 setwd("/home/erin/Documents/Work/WGS_puberty_CNV/WGS_puberty_CNVs/gene_discovery/results")
 
-write.table(df_bound_genes , "gene_discovery_dgv_gold.txt", sep ='\t', col.names = TRUE, row.names = FALSE, quote = FALSE)
+write.table(first_df , "gene_discovery_dgv_gold_30_40.txt", sep ='\t', col.names = TRUE, row.names = FALSE, quote = FALSE)
+
+write.table(second_df , "gene_discovery_dgv_gold_20_29.txt", sep ='\t', col.names = TRUE, row.names = FALSE, quote = FALSE)
+
+write.table(third_df , "gene_discovery_dgv_gold_10_19.txt", sep ='\t', col.names = TRUE, row.names = FALSE, quote = FALSE)
+
+write.table(fourth_df , "gene_discovery_dgv_gold_4_9.txt", sep ='\t', col.names = TRUE, row.names = FALSE, quote = FALSE)
 

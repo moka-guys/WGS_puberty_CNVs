@@ -106,7 +106,11 @@ on to that date
 3) Puts all the genes for the merged regions into one row per SV regions & the associated genes 
 4) Puts all the genes (and combinations of genes per for larger SVs) into one dataframe, with the patients ID
 5) Counts regions which overlap with each other 
-6) Keeps regions/ groups of genes which appear in >= 20 samples in the cohort
+6) Splits dataframes by count of samples the SV occurred in and saves 
+
+## Run gene_discovery_merge_outputs.py
+1) Pull in the output from the last script 
+2) Save as tabs of the sample xlxs sheet
 
 
 ## Understanding outputs. 
